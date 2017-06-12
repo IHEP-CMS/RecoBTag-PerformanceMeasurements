@@ -323,6 +323,7 @@ class JetInfoBranches {
     // per jet
     float TagVarCSV_trackJetPt[nMaxJets_];                           // track-based jet transverse momentum
     float TagVarCSV_jetNTracks[nMaxJets_];                           // tracks associated to jet
+    float TagVarCSV_jetNchTracks[nMaxJets_];                         // number of charged tracks associated to jet
     float TagVarCSV_jetNTracks_PV[nMaxJets_];                        // tracks associated to jet which are from Primary vertex
     float TagVarCSV_jetNTracks_nonPV[nMaxJets_];                     // tracks associated to jet which are not from Primary vertex
     float TagVarCSV_jetNTracks_PV_Ntracks[nMaxJets_];                // Ratio of the tracks from PV to the total tracks associated to jet
@@ -366,7 +367,7 @@ class JetInfoBranches {
     float TagVarCSV_Num2tv[nMaxJets_];                               // fraction of the times the tracks are not coming from same vertex
     float TagVarCSV_DCA_2tracks_2d[nMaxJets_];                       // transverse Distance of closest appraoch between two tracks
     float TagVarCSV_DCA_2tracks_3d[nMaxJets_];                       // Distance of closest appraoch between two tracks
-    float TagVarCSV_AveSip1dVal[nMaxTrk_];                           // Average 1D impact parameter (Average = ratio of sum of the impact parameter of all associated tracks to the number of tracks)
+    float TagVarCSV_AveSip1dVal[nMaxTrk_];                      // Average 1D impact parameter (Average = ratio of sum of the impact parameter of all associated tracks to the number of tracks)
     float TagVarCSV_AveSip1dSig[nMaxTrk_];                           // Average 1D impact parameter Significance
     float TagVarCSV_AveSip2dVal[nMaxTrk_];                           // Average 2D impact parameter 
     float TagVarCSV_AveSip2dSig[nMaxTrk_];                           // Average 2D impact parameter Significance
@@ -386,10 +387,10 @@ class JetInfoBranches {
 
     float TagVarCSV_trackIp1dVal[nMaxTrk_];                          // track 1D impact parameter
     float TagVarCSV_trackIp1dSig[nMaxTrk_];                          // track 1D impact parameter significance
-    float TagVarCSV_trackSip2dVal[nMaxTrk_];                         // track 2D signed impact parameter
-    float TagVarCSV_trackSip2dSig[nMaxTrk_];                         // track 2D signed impact parameter significance
-    float TagVarCSV_trackSip3dVal[nMaxTrk_];                         // track 3D signed impact parameter
-    float TagVarCSV_trackSip3dSig[nMaxTrk_];                         // track 3D signed impact parameter significance
+    float TagVarCSV_trackIp2dVal[nMaxTrk_];                         // track 2D signed impact parameter
+    float TagVarCSV_trackIp2dSig[nMaxTrk_];                         // track 2D signed impact parameter significance
+    float TagVarCSV_trackIp3dVal[nMaxTrk_];                         // track 3D signed impact parameter
+    float TagVarCSV_trackIp3dSig[nMaxTrk_];                         // track 3D signed impact parameter significance
     
     float TagVarCSV_trackSip1dVal[nMaxTrk_];                         // track 1D signed impact parameter
     float TagVarCSV_trackSip1dSig[nMaxTrk_];                         // track 1D signed impact parameter significance
@@ -791,7 +792,6 @@ class JetInfoBranches {
       tree->Branch((name+"TagVarCSV_Num2tv").c_str()                   ,TagVarCSV_Num2tv                   ,(name+"TagVarCSV_Num2tv["+name+"nJet]/F").c_str()        );
       tree->Branch((name+"TagVarCSV_DCA_2tracks_2d").c_str()           ,TagVarCSV_DCA_2tracks_2d           ,(name+"TagVarCSV_DCA_2tracks_2d["+name+"nJet]/F").c_str()        );
       tree->Branch((name+"TagVarCSV_DCA_2tracks_3d").c_str()           ,TagVarCSV_DCA_2tracks_3d           ,(name+"TagVarCSV_DCA_2tracks_3d["+name+"nJet]/F").c_str()        );
-     
       tree->Branch((name+"TagVarCSV_AveSip1dVal").c_str()  ,TagVarCSV_AveSip1dVal  ,(name+"TagVarCSV_AveSip1dVal["+name+"nJet]/F").c_str()     );
       tree->Branch((name+"TagVarCSV_AveSip1dSig").c_str()  ,TagVarCSV_AveSip1dSig  ,(name+"TagVarCSV_AveSip1dSig["+name+"nJet]/F").c_str()     );
       tree->Branch((name+"TagVarCSV_AveSip2dVal").c_str()  ,TagVarCSV_AveSip2dVal  ,(name+"TagVarCSV_AveSip2dVal["+name+"nJet]/F").c_str()     );
@@ -1331,6 +1331,12 @@ class JetInfoBranches {
       tree->SetBranchAddress((name+"TagVarCSV_trackSip2dSig").c_str()     ,TagVarCSV_trackSip2dSig    );
       tree->SetBranchAddress((name+"TagVarCSV_trackSip3dVal").c_str()     ,TagVarCSV_trackSip3dVal    );
       tree->SetBranchAddress((name+"TagVarCSV_trackSip3dSig").c_str()     ,TagVarCSV_trackSip3dSig    );
+      tree->SetBranchAddress((name+"TagVarCSV_AveSip3dVal").c_str()  ,TagVarCSV_AveSip3dVal );
+      tree->SetBranchAddress((name+"TagVarCSV_AveSip3dSig").c_str()  ,TagVarCSV_AveSip3dSig );
+      tree->SetBranchAddress((name+"TagVarCSV_AveSip2dVal").c_str()  ,TagVarCSV_AveSip2dVal );
+      tree->SetBranchAddress((name+"TagVarCSV_AveSip2dSig").c_str()  ,TagVarCSV_AveSip2dSig );
+      tree->SetBranchAddress((name+"TagVarCSV_AveSip1dVal").c_str()  ,TagVarCSV_AveSip1dVal );
+      tree->SetBranchAddress((name+"TagVarCSV_AveSip1dSig").c_str()  ,TagVarCSV_AveSip1dSig );
       tree->SetBranchAddress((name+"TagVarCSV_trackDecayLenVal").c_str()  ,TagVarCSV_trackDecayLenVal );
       tree->SetBranchAddress((name+"TagVarCSV_trackDecayLenSig").c_str()  ,TagVarCSV_trackDecayLenSig );
       tree->SetBranchAddress((name+"TagVarCSV_trackJetDistVal").c_str()   ,TagVarCSV_trackJetDistVal  );
